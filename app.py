@@ -200,7 +200,8 @@ def new_gemini_chat(history=None):
         ),
         history=history,
     )
-
+               
+               
 
 def history_for_gemini(conv_id):
     """Rebuild Gemini's memory from the saved messages (last 30). Used after a server restart.

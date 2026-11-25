@@ -27,14 +27,14 @@
     {% endif %}
   </nav>
 </header>
-
+<p>vdfdf</p>
 {% with messages = get_flashed_messages(with_categories=true) %}
   {% for cat, msg in messages %}<div class="flash {{ cat }}">{{ msg }}</div>{% endfor %}
 {% endwith %}
 
 {% block content %}{% endblock %}
 
-<footer>Demo site: hotel names are real (OpenStreetMap), prices and bookings are simulated.</footer>
+<footer>Demo site: hotel names are real (OpenStreetMap), prices and bookings are simulated.TEST</footer>
 
 <!-- Chatbot widget: appears on every page -->
 <button id="chat-toggle" type="button" aria-label="Open travel assistant">Ask our assistant</button>
