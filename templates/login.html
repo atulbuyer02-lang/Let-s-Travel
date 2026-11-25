@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Log in - Let’s Travel{% endblock %}
+{% block content %}
+<section class="wrap auth">
+  <h2>Welcome back</h2>
+  <!-- No action= means the form posts to this same URL, so a ?next=... in the address is kept -->
+  <form method="post" class="auth-card">
+    <label><span>Email</span><input type="email" name="email" value="{{ email }}" required autocomplete="email" autofocus></label>
+    <label><span>Password</span><input type="password" name="password" required autocomplete="current-password"></label>
+    <button type="submit">Log in</button>
+    <p class="muted">New here? <a href="{{ url_for('register', next=request.args.get('next')) }}">Create an account</a></p>
+  </form>
+</section>
+{% endblock %}

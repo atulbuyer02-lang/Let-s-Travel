@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Hotels - Wayfarer{% endblock %}
+{% block content %}
+<section class="wrap">
+  <h2>Search hotels</h2>
+  <form class="search wide" method="get">
+    <label><span>City</span><input name="city" value="{{ city }}" placeholder="Where to?" required></label>
+    <label><span>Check-in</span><input type="date" name="check_in" value="{{ check_in }}" min="{{ today }}"></label>
+    <label><span>Check-out</span><input type="date" name="check_out" value="{{ check_out }}" min="{{ today }}"></label>
+    <label><span>Guests</span><input type="number" name="guests" value="{{ guests }}" min="1" max="10"></label>
+    <button type="submit">Search</button>
+  </form>
+
+  {% if result %}
+    {% if result.error %}
+      <p class="flash error">{{ result.error }}</p>
+    {% elif not result.results %}
+      <p>{{ result.message }}</p>
+    {% else %}
+      <p class="muted">{{ result.nights }} night(s), {{ result.guests }} guest(s). Hotels are real; prices and availability are simulated.</p>
+      {% for h in result.results %}
+      <article class="hotel">
+        <div class="info">
+          <h3>{{ h.name }}</h3>
+          <div class="meta">
+            {% if h.stars is number %}<span class="stars" aria-label="{{ h.stars }} stars">{{ "★" * h.stars }}</span>{% else %}<span>Unrated</span>{% endif %}
+            <span class="chip{% if h.rooms_left <= 3 %} low{% endif %}">{{ h.rooms_left }} room(s) left</span>
+            {% if h.website %}<a href="{{ h.website }}" target="_blank" rel="noopener">Hotel website</a>{% endif %}
+          </div>
+          <p class="stay">{{ check_in }} to {{ check_out }}</p>
+        </div>
+        <div class="side">
+          <p class="price"><strong>{{ h.currency }} {{ "{:,}".format(h.price_per_night) }} <small>/ night</small></strong><span>Total {{ h.currency }} {{ "{:,}".format(h.total_price) }}</span></p>
+          {% if current_user %}
+          <form method="post" action="{{ url_for('book') }}" class="book">
+            <input type="hidden" name="hotel_id" value="{{ h.hotel_id }}">
+            <input type="hidden" name="check_in" value="{{ check_in }}">
+            <input type="hidden" name="check_out" value="{{ check_out }}">
+            <input type="hidden" name="guests" value="{{ guests }}">
+            <input name="guest_name" value="{{ current_user.name }}" placeholder="Guest full name" required aria-label="Guest name">
+            <button type="submit">Book (demo)</button>
+          </form>
+          {% else %}
+          <a class="book-login" href="{{ url_for('login', next=request.full_path) }}">Log in to book</a>
+          {% endif %}
+        </div>
+      </article>
+      {% endfor %}
+    {% endif %}
+  {% endif %}
+</section>
+{% endblock %}

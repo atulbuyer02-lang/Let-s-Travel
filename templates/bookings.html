@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}My bookings - Let’s Travel{% endblock %}
+
+{# One table, used for both sections. #}
+{% macro booking_table(rows, extra_class="") %}
+<div class="scroll {{ extra_class }}"><table>
+  <colgroup><col style="width:17%"><col style="width:22%"><col style="width:13%"><col style="width:13%"><col style="width:13%"><col style="width:8%"><col style="width:14%"></colgroup>
+  <tr><th>Reference</th><th>Hotel</th><th>Guest</th><th>Check-in</th><th>Check-out</th><th>Nights</th><th>Total (INR)</th></tr>
+  {% for r in rows %}
+  <tr>
+    <td>{{ r.ref }}{% if r.status == "now" %} <span class="chip">Staying now</span>{% endif %}</td>
+    <td>{{ r.hotel }}</td><td>{{ r.guest_name }}</td><td>{{ r.check_in }}</td><td>{{ r.check_out }}</td>
+    <td>{{ r.nights }}</td><td>{{ "{:,}".format(r.total_price) }}</td>
+  </tr>
+  {% endfor %}
+</table></div>
+{% endmacro %}
+
+{% block content %}
+<section class="wrap">
+  <h2>My demo bookings</h2>
+  {% if not upcoming and not previous %}
+    <p>No bookings yet. <a href="{{ url_for('hotels_page') }}">Find a hotel</a> or ask the assistant.</p>
+  {% else %}
+    <h3 class="sec-title first">Upcoming <span class="count">{{ upcoming|length }}</span></h3>
+    {% if upcoming %}{{ booking_table(upcoming) }}
+    {% else %}<p class="muted empty">No upcoming bookings. <a href="{{ url_for('hotels_page') }}">Find a hotel</a></p>{% endif %}
+
+    <h3 class="sec-title">Previous <span class="count">{{ previous|length }}</span></h3>
+    {% if previous %}{{ booking_table(previous, "past") }}
+    {% else %}<p class="muted empty">Stays you have completed will show up here.</p>{% endif %}
+  {% endif %}
+  <p class="muted">Bookings made through the chatbot show up here too.</p>
+</section>
+{% endblock %}

@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#14b8a6"/>
+      <stop offset="1" stop-color="#0b2f3a"/>
+    </linearGradient>
+    <linearGradient id="sun" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffd36b"/>
+      <stop offset="1" stop-color="#f08a24"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="16" fill="url(#bg)"/>
+  <!-- sun, top-left, clear of the plane -->
+  <circle cx="19" cy="19" r="7" fill="url(#sun)"/>
+  <!-- dotted flight path with one loop, ending at the plane -->
+  <path d="M10 53 C 18 57, 27 55, 27 48 C 27 41, 19 42, 21 47 C 23 52, 31 47, 36 41"
+        fill="none" stroke="#ffd36b" stroke-width="2.6" stroke-linecap="round" stroke-dasharray="0.1 5.2"/>
+  <!-- paper plane -->
+  <path d="M55 15 L25 28 L37 33 Z" fill="#ffffff"/>
+  <path d="M55 15 L37 33 L39 46 L46 37 Z" fill="#cfeeea"/>
+  <path d="M37 33 L46 37 L39 46 Z" fill="#8fd3cb"/>
+</svg>

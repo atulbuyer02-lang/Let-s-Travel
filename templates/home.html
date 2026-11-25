@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero">
+  <h1>Find your next trip.</h1>
+  <p>Search hotels yourself, or just tell our assistant where and when.</p>
+  <form class="search" action="{{ url_for('hotels_page') }}" method="get">
+    <input name="city" placeholder="Where to? e.g. Goa" required aria-label="City">
+    <button type="submit">Search hotels</button>
+  </form>
+  <button class="ghost" type="button" onclick="askBot('Plan a 3-day trip for me. Ask me where I want to go.')">Or let the assistant plan it</button>
+</section>
+
+<section class="wrap">
+  <h2>Popular destinations</h2>
+  <div class="grid">
+    {% for name, tag, bg in destinations %}
+    <article class="card" style="--bg: {{ bg }}">
+      <div class="card-art" aria-hidden="true"></div>
+      <h3>{{ name }}</h3>
+      <p>{{ tag }}</p>
+      <div class="row">
+        <a href="{{ url_for('hotels_page', city=name) }}">Hotels in {{ name }}</a>
+        <button type="button" class="link" onclick="askBot('What is the best time to visit {{ name }} and what should I see?')">Ask about {{ name }}</button>
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}
